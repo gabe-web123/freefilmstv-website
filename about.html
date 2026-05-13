@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Filmmakers — Free Films TV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Submit your film to Free Films TV. We handle distribution, marketing, and split ad revenue with filmmakers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #D4782A;
+      --accent-hover: #E08A3A;
+      --bg: #0A0A0A;
+      --text: #F5F5F5;
+      --text-secondary: #A0A0A0;
+      --text-muted: #6B6B6B;
+      --border: #222;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(ellipse 140% 80% at 100% 0%, rgba(212, 120, 42, 0.1) 0%, transparent 70%);
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo span {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); font-weight: 600; }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .page {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 160px 24px 120px;
+    }
+
+    .lead {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 40px;
+    }
+
+    .lead span {
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .body-text {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .section-heading {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-top: 80px;
+      margin-bottom: 28px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 600;
+      text-align: left;
+      padding: 20px 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .faq-q:hover { color: var(--text-secondary); }
+
+    .faq-q svg {
+      flex-shrink: 0;
+      transition: transform 0.25s;
+      color: var(--text-muted);
+    }
+
+    .faq-item.open .faq-q svg { transform: rotate(45deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-a-inner {
+      padding: 0 0 20px;
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-a { max-height: 500px; }
+
+    .cta-block {
+      margin-top: 36px;
+      margin-bottom: 0;
+    }
+
+    .cta-block a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+
+    .cta-block a:hover { background: var(--accent-hover); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 24px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 56px; }
+      .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: rgba(10,10,10,0.98); flex-direction: column; padding: 20px; gap: 16px; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+
+      .page { padding: 120px 20px 80px; }
+      .lead { font-size: 28px; }
+
+      footer { flex-direction: column; gap: 16px; padding: 30px 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><span>Free Films TV</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about" class="active">For Filmmakers</a></li>
+      <li><a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">YouTube</a></li>
+    </ul>
+  </nav>
+
+  <div class="page">
+
+    <h1 class="lead">We publish your film, market it, and split the revenue with you. <span>You keep full ownership.</span></h1>
+
+    <p class="body-text">Free Films TV is a YouTube channel where people watch films for free. We work with filmmakers to get their work in front of a real audience. We handle the publishing, thumbnails, SEO, promotion, and cross-platform marketing so the film actually gets seen.</p>
+
+    <p class="body-text">There's no cost to submit and no exclusivity requirement. We split ad revenue, send monthly reports, and pay out quarterly.</p>
+
+    <div class="cta-block">
+      <a href="/submit">
+        Submit a Film
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="section-heading">Common Questions</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>How does the revenue split work?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">We split YouTube ad revenue with filmmakers. The exact split is agreed upon before publication. If no custom split is arranged, the default is 50/50. You get monthly reports and quarterly payments.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Do I keep ownership of my film?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Yes. You retain full ownership and all intellectual property rights. We get a non-exclusive license to distribute and promote the film on our channel and social platforms.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Can I remove my film later?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Yes. After 12 months, you can request removal in writing and we'll take it down within 60 days.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>What types of films do you accept?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Feature films, short films, and documentaries across all genres. The film must be complete and you must own or control the distribution rights.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>What if my film is already on YouTube?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">That's fine. Many films we feature already have uploads with low views. We can work with your existing upload or publish a new optimized version on our channel.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>How much money can I expect to make?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Revenue depends on views, ad rates, and audience. We don't guarantee a specific amount. What we do is professional marketing and optimization to give your film the best chance.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Will you edit my film?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">We may make minor edits to resolve copyright claims or platform issues, but we preserve the integrity of your film. We may create short clips for promotional purposes.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Is there a cost to submit?</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">No. Submission is free. We make money when your film makes money.</div></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/about">For Filmmakers</a>
+      <a href="/submit">Submit a Film</a>
+      <a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">YouTube</a>
+    </div>
+    <p>&copy; 2026 Free Films TV</p>
+  </footer>
+
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>

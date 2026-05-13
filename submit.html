@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Your Film — Free Films TV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Submit your independent film for review on Free Films TV.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #C2662D;
+      --accent-hover: #D4783F;
+      --bg: #0A0A0A;
+      --bg-card: #181818;
+      --text: #F5F5F5;
+      --text-secondary: #A0A0A0;
+      --text-muted: #6B6B6B;
+      --border: #222;
+      --border-focus: #444;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo img { height: 34px; display: block; }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); font-weight: 600; }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 8px 18px !important;
+      border-radius: 5px;
+      font-weight: 600 !important;
+    }
+
+    .nav-cta:hover { background: var(--accent-hover) !important; }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* --- FORM LAYOUT --- */
+    .form-page {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 120px 20px 80px;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .form-header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .form-header p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 16px;
+    }
+
+    .form-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .field label .optional {
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="url"],
+    .field textarea,
+    .field select {
+      width: 100%;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--border-focus);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.5;
+    }
+
+    .field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B6B6B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .field-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* --- Agreement --- */
+    .agreement-scroll {
+      max-height: 260px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      background: var(--bg);
+    }
+
+    .agreement-scroll h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .agreement-scroll h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin: 16px 0 6px;
+    }
+
+    .agreement-scroll h3:first-child { margin-top: 0; }
+
+    .agreement-scroll::-webkit-scrollbar { width: 6px; }
+    .agreement-scroll::-webkit-scrollbar-track { background: transparent; }
+    .agreement-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .checkbox-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-field span {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* --- Validation --- */
+    .field.error input,
+    .field.error textarea,
+    .field.error select {
+      border-color: var(--danger);
+    }
+
+    .field-error {
+      font-size: 13px;
+      color: var(--danger);
+      margin-top: 6px;
+      display: none;
+    }
+
+    .field.error .field-error { display: block; }
+
+    .checkbox-error {
+      font-size: 13px;
+      color: var(--danger);
+      margin-top: 8px;
+      display: none;
+    }
+
+    .checkbox-error.show { display: block; }
+
+    /* --- Submit --- */
+    .submit-wrap { margin-top: 28px; }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      padding: 14px 32px;
+      cursor: pointer;
+      transition: background 0.15s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .submit-btn:hover { background: var(--accent-hover); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .submit-btn svg { transition: transform 0.15s; }
+    .submit-btn:hover svg { transform: translateX(2px); }
+
+    /* --- Success --- */
+    .success-msg {
+      display: none;
+      text-align: center;
+      min-height: 70vh;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .success-msg.show { display: flex; }
+
+    .success-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 48px;
+      max-width: 460px;
+      width: 100%;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(22, 163, 74, 0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .success-msg h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .success-msg p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 24px; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 56px; }
+      .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: rgba(10,10,10,0.98); flex-direction: column; padding: 20px; gap: 16px; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+
+      .form-page { padding: 100px 16px 60px; }
+      .form-header h1 { font-size: 28px; }
+      .form-card { padding: 24px; }
+      .field-row { grid-template-columns: 1fr; }
+
+      footer { flex-direction: column; gap: 16px; padding: 30px 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="https://proshotmediagroup.com/wp-content/uploads/2026/05/fftv-logo.jpg" alt="Free Films TV">
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">For Filmmakers</a></li>
+      <li><a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">YouTube</a></li>
+      <li><a href="/submit" class="nav-cta active">Submit a Film</a></li>
+    </ul>
+  </nav>
+
+  <div class="form-page">
+    <div class="form-header" id="formHeader">
+      <h1>Submit your film for review</h1>
+      <p>We select a limited number of films to feature on our channel. Tell us about yours and we'll let you know if it's a fit.</p>
+    </div>
+
+    <form id="submitForm" novalidate>
+
+      <div class="form-card">
+        <div class="form-card-title">About You</div>
+        <div class="field-row" style="margin-bottom:20px;">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe">
+            <div class="field-error">Required</div>
+          </div>
+          <div class="field">
+            <label for="company">Company <span class="optional">(optional)</span></label>
+            <input type="text" id="company" name="company" placeholder="Production company or studio">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com">
+            <div class="field-error">Enter a valid email</div>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">About Your Film</div>
+        <div class="field">
+          <label for="filmTitle">Film Title</label>
+          <input type="text" id="filmTitle" name="film_title" placeholder="The name of your film">
+          <div class="field-error">Required</div>
+        </div>
+        <div class="field">
+          <label for="genre">Genre</label>
+          <input type="text" id="genre" name="genre" placeholder="e.g. Drama, Horror, Documentary">
+          <div class="field-error">Required</div>
+        </div>
+        <div class="field">
+          <label for="description">Synopsis</label>
+          <textarea id="description" name="description" placeholder="Give us a short summary of your film — what's the story?"></textarea>
+          <div class="field-error">Required</div>
+        </div>
+        <div class="field">
+          <label for="youtubeLink">Existing YouTube Link <span class="optional">(optional)</span></label>
+          <input type="url" id="youtubeLink" name="youtube_link" placeholder="https://youtube.com/watch?v=...">
+          <div class="field-hint">If your film is already on YouTube, paste the link here.</div>
+        </div>
+        <div class="field">
+          <label for="filmLink">Film File Link</label>
+          <input type="url" id="filmLink" name="film_link" placeholder="Google Drive, Dropbox, WeTransfer, etc.">
+          <div class="field-hint">Share a download link to the full film file. Make sure we have access.</div>
+          <div class="field-error">Please enter a valid link</div>
+        </div>
+        <div class="field">
+          <label for="posterLink">Poster or Key Art Link <span class="optional">(optional)</span></label>
+          <input type="url" id="posterLink" name="poster_link" placeholder="Link to poster image, key art, or promotional stills">
+          <div class="field-hint">Helps us design a stronger thumbnail.</div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Additional Info</div>
+        <div class="field">
+          <label for="source">How did you hear about Free Films TV?</label>
+          <input type="text" id="source" name="source" placeholder="YouTube, referral, social media, etc.">
+          <div class="field-error">Required</div>
+        </div>
+        <div class="field">
+          <label for="notes">Notes <span class="optional">(optional)</span></label>
+          <textarea id="notes" name="notes" placeholder="Awards, festival screenings, press coverage, or anything else that makes your film stand out."></textarea>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Film License Agreement</div>
+        <div class="agreement-scroll">
+          <h2>Free Films TV — Film License Agreement</h2>
+          <p>This Film License Agreement ("Agreement") is entered into between Free Films TV, operated by ProShot Media LLC ("FFTV"), and the filmmaker or rights holder submitting a film through the FFTV intake process ("Filmmaker").</p>
+
+          <h3>1. Grant of License</h3>
+          <p>Filmmaker grants FFTV a non-exclusive license to host, distribute, promote, and modify the submitted film ("Film") on the Free Films TV YouTube channel and any other platforms FFTV operates on or distributes content through, including but not limited to Instagram, TikTok, YouTube Shorts, Facebook, LinkedIn, Reddit, and any other social media platforms or channels FFTV sees fit. Filmmaker retains full ownership of the Film and all underlying intellectual property rights.</p>
+
+          <h3>2. Scope of Use</h3>
+          <p>FFTV may: upload and publish the Film on the Free Films TV YouTube channel and any other platform listed in Section 1; create and use custom thumbnails, titles, descriptions, and metadata; include the Film in YouTube playlists and channel programming; promote the Film through FFTV's social media accounts and cross-promotion channels; enable monetization (ads) on the Film across all applicable platforms; edit, alter, or modify the Film's content for the purpose of resolving copyright claims, addressing platform policy violations, or optimizing the Film for increased viewership and discoverability, while preserving the overall integrity of the Film; and cut, clip, or re-edit the Film into shorter videos or short-form content for the purpose of promoting the Film, the Free Films TV channel, or FFTV's presence on other platforms.</p>
+          <p>FFTV will not: sub-license or sell the Film to third parties without written consent; or claim ownership of the Film or its underlying intellectual property.</p>
+
+          <h3>3. Revenue Sharing</h3>
+          <p>FFTV and Filmmaker agree to split ad revenue generated by the Film across all applicable platforms. The specific revenue split percentage will be agreed upon in writing before the Film is published. If no revenue split is agreed upon in writing prior to publication, the default split shall be 50% to FFTV and 50% to Filmmaker.</p>
+          <p>FFTV does not guarantee that the Film will generate any ad revenue. Revenue depends on factors including but not limited to viewership, platform ad rates, advertiser demand, content eligibility for monetization, and platform policies — all of which are outside FFTV's control. Filmmaker acknowledges that it is possible the Film may generate little to no revenue.</p>
+          <p>Revenue reports shall be provided monthly, subject to revenue being generated by the respective content. If the Film has not generated any ad revenue in a given month, FFTV is under no obligation to provide a report for that period. Payments will be issued on a quarterly basis within 30 days of the end of each calendar quarter, only if the Film has generated ad revenue during that quarter. If no revenue has been generated, no payment is due and FFTV is not in breach of this Agreement for not issuing one.</p>
+          <p>If FFTV fails to issue a payment for revenue that has been generated within 30 days of the quarterly due date, Filmmaker may provide written notice of the overdue payment. FFTV shall have 15 days from receipt of such notice to cure the delinquency. If FFTV fails to cure within the 15-day period, Filmmaker may request removal of the Film per Section 5, and the minimum term requirement shall be waived for that request.</p>
+
+          <h3>4. Filmmaker Representations and Indemnification</h3>
+          <p>Filmmaker represents and warrants that: they are the sole owner or authorized rights holder of the Film; the Film does not infringe on any third-party intellectual property rights; they have obtained all necessary releases, permissions, and clearances; and the Film does not contain unlawful content.</p>
+          <p>Filmmaker agrees to indemnify, defend, and hold harmless FFTV, ProShot Media LLC, and its officers, employees, and agents from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorney's fees) arising out of or related to any breach of the above representations and warranties.</p>
+
+          <h3>5. Term and Termination</h3>
+          <p>This Agreement takes effect upon FFTV's acceptance and publication of the Film and shall remain in effect unless terminated as described below. FFTV may remove the Film from any or all platforms at any time, at its sole discretion, for any reason or no reason, without prior notice to Filmmaker.</p>
+          <p>Filmmaker may request removal of the Film by providing written notice to FFTV, subject to the following: (a) the Film must have been published on the FFTV channel for a minimum of twelve (12) months before a removal request will be considered; and (b) upon receipt of a valid removal request, FFTV shall have sixty (60) days to remove the Film from its platforms.</p>
+          <p>Any short-form content, clips, promotional edits, or derivative works created by FFTV under Section 2 may remain published on FFTV's platforms after the Film is removed, unless otherwise agreed in writing. Revenue earned prior to removal remains payable per Section 3.</p>
+
+          <h3>6. Limitation of Liability</h3>
+          <p>FFTV is not liable for any loss of revenue, exposure, or viewership resulting from platform changes, algorithm updates, content policy enforcement, or other factors outside FFTV's control. In no event shall FFTV's total liability to Filmmaker under this Agreement exceed the total revenue payments made to Filmmaker in the twelve (12) months preceding the claim.</p>
+
+          <h3>7. Dispute Resolution</h3>
+          <p>Any dispute arising out of or relating to this Agreement shall be resolved through binding arbitration administered in accordance with the rules of the American Arbitration Association. The arbitration shall take place in the State of California. The arbitrator's decision shall be final and binding.</p>
+
+          <h3>8. Governing Law</h3>
+          <p>This Agreement shall be governed by the laws of the State of California.</p>
+        </div>
+        <label class="checkbox-field">
+          <input type="checkbox" id="agreeTerms" name="agree_terms">
+          <span>I have read and agree to the Film License Agreement above. I confirm that I am the owner or authorized rights holder of the submitted film.</span>
+        </label>
+        <div class="checkbox-error" id="agreeError">You must agree to the license agreement to submit</div>
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Submit for Review
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Submission received</h2>
+        <p>Thanks for submitting your film. Our team will review it and reach out if it's selected for the channel.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/about">For Filmmakers</a>
+      <a href="/submit">Submit a Film</a>
+      <a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">YouTube</a>
+    </div>
+    <p>&copy; 2026 Free Films TV</p>
+  </footer>
+
+  <script>
+  (() => {
+    const $ = s => document.querySelector(s);
+    const form = $('#submitForm');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      clearErrors();
+
+      let valid = true;
+
+      const filmTitle = $('#filmTitle').value.trim();
+      const genre = $('#genre').value.trim();
+      const description = $('#description').value.trim();
+      const filmLink = $('#filmLink').value.trim();
+      const name = $('#name').value.trim();
+      const email = $('#email').value.trim();
+      const source = $('#source').value.trim();
+      const agreed = $('#agreeTerms').checked;
+
+      if (!filmTitle) { setError('filmTitle'); valid = false; }
+      if (!genre) { setError('genre'); valid = false; }
+      if (!description) { setError('description'); valid = false; }
+      if (!name) { setError('name'); valid = false; }
+      if (!email || !email.includes('@') || !email.includes('.')) { setError('email'); valid = false; }
+      if (!source) { setError('source'); valid = false; }
+
+      if (!filmLink) {
+        setError('filmLink');
+        valid = false;
+      } else {
+        try {
+          new URL(filmLink.startsWith('http') ? filmLink : 'https://' + filmLink);
+        } catch {
+          setError('filmLink');
+          valid = false;
+        }
+      }
+
+      if (!agreed) {
+        $('#agreeError').classList.add('show');
+        valid = false;
+      }
+
+      if (!valid) {
+        const firstError = document.querySelector('.field.error, .checkbox-error.show');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      const payload = {
+        film_title: filmTitle,
+        genre,
+        description,
+        film_link: filmLink.startsWith('http') ? filmLink : 'https://' + filmLink,
+        name,
+        email,
+        youtube_link: $('#youtubeLink').value.trim() || null,
+        poster_link: $('#posterLink').value.trim() || null,
+        company: $('#company').value.trim() || null,
+        phone: $('#phone').value.trim() || null,
+        source,
+        notes: $('#notes').value.trim() || null,
+        agreed_to_terms: true
+      };
+
+      const btn = $('#submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      fetch('https://command.proshotmediagroup.com/fftv/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Server error');
+        return res.json();
+      })
+      .then(() => {
+        form.style.display = 'none';
+        $('#formHeader').style.display = 'none';
+        $('#successMsg').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(err => {
+        console.error(err);
+        btn.disabled = false;
+        btn.innerHTML = 'Submit for Review <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+        alert('Something went wrong. Please try again.');
+      });
+    });
+
+    function setError(id) {
+      const el = document.getElementById(id);
+      if (el) el.closest('.field').classList.add('error');
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.field.error').forEach(f => f.classList.remove('error'));
+      $('#agreeError').classList.remove('show');
+    }
+  })();
+  </script>
+
+</body>
+</html>

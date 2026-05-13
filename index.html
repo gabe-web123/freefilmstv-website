@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Free Films TV — Watch Independent Films for Free</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Watch full-length independent films for free. No membership required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #D4782A;
+      --accent-hover: #E08A3A;
+      --bg: #0A0A0A;
+      --bg-card: #181818;
+      --text: #F5F5F5;
+      --text-secondary: #A0A0A0;
+      --text-muted: #6B6B6B;
+      --border: #222;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.7) 60%, transparent 100%);
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-logo img { height: 34px; display: block; }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); font-weight: 600; }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 8px 18px !important;
+      border-radius: 5px;
+      font-weight: 600 !important;
+    }
+
+    .nav-cta:hover { background: var(--accent-hover) !important; }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 560px;
+      max-height: 860px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: cover;
+      background-position: center top;
+      z-index: 0;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        linear-gradient(to top, var(--bg) 0%, rgba(10,10,10,0.15) 50%, rgba(10,10,10,0.3) 100%),
+        linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 40%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.0;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.6);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta .match {
+      color: #46d369;
+      font-weight: 700;
+    }
+
+    .hero-meta .badge {
+      border: 1px solid var(--text-muted);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      max-width: 480px;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.6);
+    }
+
+    .hero-cast {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    .hero-genres {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-play {
+      background: #fff;
+      color: #000;
+      border-radius: 50px;
+      padding: 14px 32px;
+    }
+
+    .btn-play:hover { background: #e0e0e0; }
+
+    .btn-info {
+      background: rgba(109,109,110,0.7);
+      color: #fff;
+    }
+
+    .btn-info:hover { background: rgba(109,109,110,0.5); }
+
+    /* --- FILM ROWS --- */
+    .film-section {
+      padding: 0 48px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .film-section:first-of-type {
+      margin-top: -60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .row-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: -0.3px;
+    }
+
+    .film-row-wrap {
+      position: relative;
+    }
+
+    .film-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+    }
+
+    .film-row::-webkit-scrollbar { display: none; }
+
+    .row-arrow {
+      position: absolute;
+      top: 0;
+      bottom: 4px;
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 10, 10, 0.7);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .film-row-wrap:hover .row-arrow { opacity: 1; }
+    .row-arrow:hover { background: rgba(10, 10, 10, 0.9); }
+    .row-arrow.left { left: 0; border-radius: 0 4px 4px 0; }
+    .row-arrow.right { right: 0; border-radius: 4px 0 0 4px; }
+
+    .film-card {
+      flex: 0 0 auto;
+      width: 260px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+
+    .film-card:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+      z-index: 3;
+    }
+
+    .film-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .film-card-play {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .film-card:hover .film-card-play { opacity: 1; }
+
+    .film-card-play svg {
+      width: 44px;
+      height: 44px;
+      fill: #fff;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+
+    .film-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    /* --- EMPTY STATE --- */
+    .empty-state {
+      text-align: center;
+      padding: 120px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state p {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state a { color: var(--accent); }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 60px;
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 24px; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 56px; }
+      .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: rgba(10,10,10,0.98); flex-direction: column; padding: 20px; gap: 16px; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+
+      .hero { height: 65vh; min-height: 420px; padding: 0 20px; }
+      .hero-title { font-size: 34px; }
+      .hero-desc { font-size: 14px; }
+      .hero-meta { flex-wrap: wrap; gap: 8px; }
+
+      .film-section { padding: 0 20px; margin-bottom: 32px; }
+      .film-section:first-of-type { margin-top: -30px; }
+      .film-card { width: 200px; }
+      .row-arrow { display: none; }
+
+      footer { flex-direction: column; gap: 16px; padding: 30px 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="/" class="nav-logo">
+      <span style="font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;text-decoration:none;">Free Films TV</span>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/about">For Filmmakers</a></li>
+      <li><a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">YouTube</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="heroSection">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content" id="heroContent"></div>
+  </section>
+
+  <!-- FILM ROWS -->
+  <main id="filmRows"></main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/about">For Filmmakers</a>
+      <a href="/submit">Submit a Film</a>
+      <a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">YouTube</a>
+    </div>
+    <p>&copy; 2026 Free Films TV</p>
+  </footer>
+
+  <script>
+    /*
+    ============================================================
+      FILM DATA — Edit this to manage your library.
+
+      Each film:
+        title    — Film title
+        desc     — 1-2 sentence synopsis (shown in hero)
+        genre    — Genre label(s)
+        year     — Year
+        cast     — Cast names (shown in hero, optional)
+        tags     — Genre tags (shown in hero, optional)
+        thumb    — Thumbnail/poster image URL
+        url      — YouTube watch URL
+        badge    — (optional) "New", "Popular", "Coming Soon"
+        row      — "featured", "popular", "new", "coming-soon"
+                    First film with row "featured" becomes the hero.
+    ============================================================
+    */
+    const films = [
+      {
+        title: "Dinner with a Stranger",
+        desc: "A casual dinner party takes a dark turn when a mysterious guest forces everyone at the table to confront secrets they've been hiding from each other.",
+        genre: "Thriller",
+        year: "2024",
+        cast: "Independent Cast",
+        tags: "Thriller, Drama, Suspense",
+        thumb: "img/dinner-with-a-stranger.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        badge: "Popular",
+        row: "featured"
+      },
+      {
+        title: "Blood Bank",
+        desc: "In a divided society split between the immune and the vulnerable, a group of teenagers must survive a summer that will change everything.",
+        genre: "Sci-Fi / Horror",
+        year: "2023",
+        cast: "Independent Cast",
+        tags: "Sci-Fi, Horror, Drama",
+        thumb: "img/blood-bank.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        badge: "New",
+        row: "popular"
+      },
+      {
+        title: "Back in the No",
+        desc: "A nurse returns to his hometown of Fresno and gets pulled back into a world he thought he'd left behind.",
+        genre: "Drama",
+        year: "2024",
+        cast: "Independent Cast",
+        tags: "Drama, Crime",
+        thumb: "img/back-in-the-no.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        row: "popular"
+      },
+      // Duplicate into other rows as placeholders
+      {
+        title: "Dinner with a Stranger",
+        desc: "",
+        genre: "Thriller",
+        year: "2024",
+        thumb: "img/dinner-with-a-stranger.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        row: "popular"
+      },
+      {
+        title: "Blood Bank",
+        desc: "",
+        genre: "Sci-Fi / Horror",
+        year: "2023",
+        thumb: "img/blood-bank.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        badge: "New",
+        row: "new"
+      },
+      {
+        title: "Back in the No",
+        desc: "",
+        genre: "Drama",
+        year: "2024",
+        thumb: "img/back-in-the-no.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        row: "new"
+      },
+      {
+        title: "Dinner with a Stranger",
+        desc: "",
+        genre: "Thriller",
+        year: "2024",
+        thumb: "img/dinner-with-a-stranger.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        row: "new"
+      },
+      {
+        title: "Blood Bank",
+        desc: "",
+        genre: "Sci-Fi / Horror",
+        year: "2023",
+        thumb: "img/blood-bank.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        badge: "Coming Soon",
+        row: "coming-soon"
+      },
+      {
+        title: "Back in the No",
+        desc: "",
+        genre: "Drama",
+        year: "2024",
+        thumb: "img/back-in-the-no.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        badge: "Coming Soon",
+        row: "coming-soon"
+      },
+      {
+        title: "Dinner with a Stranger",
+        desc: "",
+        genre: "Thriller",
+        year: "2024",
+        thumb: "img/dinner-with-a-stranger.png",
+        url: "https://www.youtube.com/@FreeFilmsTV",
+        badge: "Coming Soon",
+        row: "coming-soon"
+      },
+    ];
+
+    const rows = [
+      { id: "popular",      label: "Popular" },
+      { id: "new",           label: "Just Released" },
+      { id: "coming-soon",   label: "Coming Soon" },
+    ];
+
+    // --- RENDER ---
+    const featured = films.find(f => f.row === 'featured') || films[0];
+    const heroSection = document.getElementById('heroSection');
+    const heroBg = document.getElementById('heroBg');
+    const heroContent = document.getElementById('heroContent');
+    const filmRows = document.getElementById('filmRows');
+
+    if (!featured) {
+      heroSection.style.display = 'none';
+      filmRows.innerHTML = `
+        <div class="empty-state">
+          <p>Films are being added to the library.</p>
+          <p><a href="https://www.youtube.com/@FreeFilmsTV" target="_blank">Watch on YouTube</a> in the meantime.</p>
+        </div>`;
+    } else {
+      heroBg.style.backgroundImage = `url(${featured.thumb})`;
+      heroContent.innerHTML = `
+        <h1 class="hero-title">${featured.title}</h1>
+        <div class="hero-meta">
+          <span class="match">98% Match</span>
+          <span>${featured.year}</span>
+          <span class="badge">HD</span>
+          <span class="badge">5.1</span>
+        </div>
+        <p class="hero-desc">${featured.desc || ''}</p>
+        ${featured.cast ? `<p class="hero-cast">${featured.cast}</p>` : ''}
+        ${featured.tags ? `<p class="hero-genres">${featured.tags}</p>` : ''}
+        <div class="hero-actions">
+          <a href="${featured.url}" target="_blank" class="btn btn-play">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            Watch Now
+          </a>
+        </div>
+      `;
+
+      // Film rows
+      let rowsHtml = '';
+      for (const row of rows) {
+        const rowFilms = films.filter(f => f.row === row.id);
+        if (rowFilms.length === 0) continue;
+
+        rowsHtml += `
+          <section class="film-section">
+            <h2 class="row-title">${row.label}</h2>
+            <div class="film-row-wrap">
+              <button class="row-arrow left" onclick="scrollRow(this, -1)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="film-row">
+                ${rowFilms.map(f => `
+                  <a class="film-card" href="${f.url}" target="_blank" rel="noopener">
+                    ${f.badge ? `<span class="film-badge">${f.badge}</span>` : ''}
+                    <img class="film-thumb" src="${f.thumb}" alt="${f.title}" loading="lazy">
+                    <div class="film-card-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                  </a>
+                `).join('')}
+              </div>
+              <button class="row-arrow right" onclick="scrollRow(this, 1)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </section>
+        `;
+      }
+
+      filmRows.innerHTML = rowsHtml;
+    }
+
+    function scrollRow(btn, dir) {
+      const row = btn.parentElement.querySelector('.film-row');
+      row.scrollBy({ left: dir * 640, behavior: 'smooth' });
+    }
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+
+</body>
+</html>
